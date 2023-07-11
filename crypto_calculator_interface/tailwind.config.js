@@ -1,11 +1,16 @@
 module.exports = {
-  purge: [],
-  darkMode: false, // or 'media' or 'class'
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        primary: '#263639',
+        secondary: '#F7DFDD',
+      },
+      fontFamily: {
+        sans: ['Helvetica', 'Arial', 'sans-serif'],
+      },
+    },
   },
-  variants: {
-    extend: {},
-  },
+  content: ["./src/**/*.jsx"],
+  variants: {},
   plugins: [],
 }

@@ -5,10 +5,10 @@ import Dashboard from './components/@pages/Dashboard';
 const App = () => {
   return (
     <Router>
-    <Routes>
-      <Route exact path="/" element={<Dashboard />} />
-    </Routes>
-  </Router>
+      <Routes>
+        <Route exact path="/" element={<Dashboard />} />
+      </Routes>
+    </Router>
   );
 };
 

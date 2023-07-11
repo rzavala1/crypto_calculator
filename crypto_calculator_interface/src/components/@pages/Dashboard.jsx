@@ -1,14 +1,10 @@
-import { useEffect } from "react";
+import Layout from "../@templates/Layout";
 
 function Dashboard() {
-  useEffect(() => {
-  }, []);
-
   return (
-    <>
-      <div className="bg-blue-500 text-white p-4">
-      </div>
-    </>
+    <Layout>
+      <div className="p-4 bg-primary">hola</div>
+    </Layout>
   );
 }
 
