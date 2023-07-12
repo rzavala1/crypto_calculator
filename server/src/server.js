@@ -1,24 +1,30 @@
 const express = require('express');
+const http = require('http');
 const dotenv = require('dotenv');
-dotenv.config();
 
+dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 const cors = require('cors');
 app.use(cors());
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
 
 const indexRoutes = require('./routes/index');
 app.use('/', indexRoutes);
 
 app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).send('Internal Server Error');
+    console.error(err.stack);
+    res.status(500).send('Internal Server Error');
 });
 
-app.listen(PORT, () => {
-  console.log(`Server started on port ${PORT}`);
+const server = http.createServer(app);
+
+server.listen(PORT, () => {
+    console.log(`Server started on port ${PORT}`);
 });
+
+const crytoController = require('./controllers/crypto.controller');
+crytoController.getDataCrypto(server);
