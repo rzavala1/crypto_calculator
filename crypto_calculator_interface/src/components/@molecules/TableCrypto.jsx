@@ -2,6 +2,9 @@ import { useTable } from "react-table";
 import { useEffect, useMemo, useState } from "react";
 import { useAtom } from "jotai";
 import { cryptoAtom } from "../../jotai/CryptoAtom";
+const PATH_MESSARI_ASSETS = process.env.REACT_APP_MESSARI_ASSETS;
+const PATH_IMAGE_MESSARI_ASSETS = process.env.REACT_APP_IMAGE_MESSARI_ASSETS;
+const PATH__MESSARI = process.env.REACT_APP_HOSTNAME_MESSARI;
 
 function TableCrypto() {
   const [dataAtom] = useAtom(cryptoAtom);
@@ -25,6 +28,23 @@ function TableCrypto() {
     );
   };
 
+  const getImageCrypto = (value) => {
+    return (
+      <img
+        src={
+          PATH__MESSARI +
+          "/" +
+          PATH_MESSARI_ASSETS +
+          "/" +
+          value +
+          "/" +
+          PATH_IMAGE_MESSARI_ASSETS
+        }
+        alt=""
+      />
+    );
+  };
+
   const columns = useMemo(
     () => [
       { Header: "ASSET", accessor: "name" },
@@ -43,7 +63,11 @@ function TableCrypto() {
         accessor: "percent_change_usd_last_24_hours",
         Cell: ({ value }) => getColor(value),
       },
-      { Header: "7 DAY TREND", value: "current_marketcap_usd" },
+      {
+        Header: "7 DAY TREND",
+        accessor: "id",
+        Cell: ({ value }) => getImageCrypto(value),
+      },
       {
         Header: "REPORTED MARKETCAP",
         accessor: "current_marketcap_usd",
@@ -86,16 +110,24 @@ function TableCrypto() {
       <div>
         <table {...getTableProps()} className="table w-[100%]">
           <thead className="bg-bgTable text-white">
-            {headerGroups.map((headerGroup,index) => (
+            {headerGroups.map((headerGroup, index) => (
               <tr {...headerGroup.getHeaderGroupProps()} key={index}>
                 {headerGroup.headers.map((column, index) => (
                   <>
                     {index === 0 ? (
-                      <th {...column.getHeaderProps()} className="p-2 text-sm" key={index}>
+                      <th
+                        {...column.getHeaderProps()}
+                        className="p-2 text-sm"
+                        key={index}
+                      >
                         {column.render("Header")}
                       </th>
                     ) : (
-                      <th {...column.getHeaderProps()} className="p-2 text-sm" key={index}>
+                      <th
+                        {...column.getHeaderProps()}
+                        className="p-2 text-sm"
+                        key={index}
+                      >
                         {column.render("Header")}
                       </th>
                     )}
@@ -112,7 +144,8 @@ function TableCrypto() {
                   {row.cells.map((cell, index) => (
                     <>
                       {index === 0 ? (
-                        <td key={index}
+                        <td
+                          key={index}
                           {...cell.getCellProps()}
                           className="text-center text-primary flex p-3 text-base ml-2"
                         >
@@ -120,7 +153,8 @@ function TableCrypto() {
                           {cell.render("Cell")}
                         </td>
                       ) : (
-                        <td key={index}
+                        <td
+                          key={index}
                           {...cell.getCellProps()}
                           className="text-center p-2 text-base"
                         >
