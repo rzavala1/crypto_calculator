@@ -1,50 +1,64 @@
-import BodyCrytoTable from "./BodyCrytoTable.jsx";
-import HeadCryptoTable from "./HeadCryptoTable";
 import { useTable } from "react-table";
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { useAtom } from "jotai";
+import { cryptoAtom } from "../../jotai/CryptoAtom";
 
-function TableCrypto(props) {
-  const { data } = props;
-  const values = [
-    "ASSET",
-    "Price (USD)",
-    "CHANGE VS USD(1H)",
-    "CHANGE VS USD(24H)",
-    "7 DAY TREND",
-    "REPORTED MARKETCAP",
-    "REAL VOLUME (24H)",
-    "CHANGE VS USD (7D)",
-    "CHANGE VS USD (30D)",
-    "CHANGE VS USD(YTD)",
-  ];
+function TableCrypto() {
+  const [dataAtom] = useAtom(cryptoAtom);
+  const [data, setData] = useState([]);
 
-  //const data = React.useMemo(() => generateData(), []);
+  useEffect(() => {
+    setData(dataAtom);
+  }, [dataAtom]);
+
+  const getColor = (value) => {
+    return (
+      <div
+        style={{
+          color: value >= 0 ? "green" : "red",
+          padding: "2px",
+          borderRadius: "4px",
+        }}
+      >
+        {value >= 0 ? "+"+value+"%" :value+"%"}
+      </div>
+    );
+  };
+
   const columns = useMemo(
     () => [
       { Header: "ASSET", accessor: "name" },
-      { Header: "Price (USD)", accessor: "price_usd" },
+      { Header: "Price (USD)", accessor: "price_usd", Cell: ({ value }) => "$"+value },
+      
       {
-        Header: "CHANGE VS USD(1H)",
+        Header: "CHANGE VS USD (1H)",
         accessor: "percent_change_usd_last_1_hour",
+        Cell: ({ value }) => getColor(value),
       },
       {
-        Header: "CHANGE VS USD(24H)",
+        Header: "CHANGE VS USD (24H)",
         accessor: "percent_change_usd_last_24_hours",
+        Cell: ({ value }) => getColor(value),
       },
       { Header: "7 DAY TREND", accessor: "percent_change_last_1_week" },
-      { Header: "REPORTED MARKETCAP", accessor: "current_marketcap_usd" },
-      { Header: "REAL VOLUME (24H)", accessor: "real_volume_last_24_hours" },
+      { Header: "REPORTED MARKETCAP", accessor: "current_marketcap_usd",Cell: ({ value }) => "$"+value },
+      { Header: "REAL VOLUME (24H)", accessor: "real_volume_last_24_hours" ,Cell: ({ value }) => "$"+value },
       {
         Header: "CHANGE VS USD (30D)",
         accessor: "percent_change_last_1_month",
+        Cell: ({ value }) => getColor(value),
       },
-      { Header: "CHANGE VS USD(YTD)", accessor: "percent_change_last_1_year" },
+      {
+        Header: "CHANGE VS USD(YTD)",
+        accessor: "percent_change_last_1_year",
+        Cell: ({ value }) => getColor(value),
+      },
     ],
     []
   );
 
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-    useTable({ columns, data });
+    useTable({ columns, data: useMemo(() => data, [data]) });
 
   const getImage = (name) => {
     const srcStr = name + ".png";
@@ -58,16 +72,17 @@ function TableCrypto(props) {
           <thead className="bg-black text-white">
             {headerGroups.map((headerGroup) => (
               <tr {...headerGroup.getHeaderGroupProps()}>
-                {headerGroup.headers.map((column,index) => (
+                {headerGroup.headers.map((column, index) => (
                   <>
-                  {index === 0 ? 
-                    <th {...column.getHeaderProps()} className="p-2 text-sm">
-                    {column.render("Header")}
-                  </th>:
-                  <th {...column.getHeaderProps()} className="p-2 text-sm">
-                    {column.render("Header")}
-                  </th>
-                  }
+                    {index === 0 ? (
+                      <th {...column.getHeaderProps()} className="p-2 text-sm">
+                        {column.render("Header")}
+                      </th>
+                    ) : (
+                      <th {...column.getHeaderProps()} className="p-2 text-sm">
+                        {column.render("Header")}
+                      </th>
+                    )}
                   </>
                 ))}
               </tr>
@@ -78,23 +93,26 @@ function TableCrypto(props) {
               prepareRow(row);
               return (
                 <tr {...row.getRowProps()}>
-                  {row.cells.map((cell, index) =>
-                  <>
-                    {index === 0 ? (
-                      <td
-                        {...cell.getCellProps()}
-                        className="text-center p-2 text-primary flex"
-                      >
-                        <div>{getImage(cell.value)}</div>
-                        {cell.render("Cell")}
-                      </td>
-                    ) : (
-                      <td {...cell.getCellProps()} className="text-center p-2">
-                        {cell.render("Cell")}
-                      </td>
-                    )}
+                  {row.cells.map((cell, index) => (
+                    <>
+                      {index === 0 ? (
+                        <td
+                          {...cell.getCellProps()}
+                          className="text-center p-2 text-primary flex"
+                        >
+                          <div>{getImage(cell.value)}</div>
+                          {cell.render("Cell")}
+                        </td>
+                      ) : (
+                        <td
+                          {...cell.getCellProps()}
+                          className="text-center p-2 text-base"
+                        >
+                          {cell.render("Cell")}
+                        </td>
+                      )}
                     </>
-                  )}
+                  ))}
                 </tr>
               );
             })}

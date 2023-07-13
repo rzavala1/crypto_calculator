@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from "react";
 import io from "socket.io-client";
+import { atom, useAtom } from 'jotai';
 import TableCrypto from "../@molecules/TableCrypto";
+import { cryptoAtom } from '../../jotai/CryptoAtom';
+
 const URl_SOCKET = process.env.REACT_APP_SOCKET_URL;
 
 function CryptoForm() {
 
-  const [dataCrypto, setDataCrypto]=useState([])
-  
+  const [dataAtom, setDataAtom] = useAtom(cryptoAtom);
+
+
   useEffect(() => {
     const socket = io(URl_SOCKET); 
 
@@ -15,8 +19,8 @@ function CryptoForm() {
     });
 
     socket.on("crypto", (data) => {
-      console.info(data);
-      setDataCrypto(data);
+      console.info(data)
+      setDataAtom(data);
     });
 
     return () => {
@@ -24,15 +28,17 @@ function CryptoForm() {
     };
   }, []);
 
+
   return (
     <div>
     <div>
-      {dataCrypto?.length>0 && (
+      {dataAtom?.length>0 ? (
         <>
-        <TableCrypto data={dataCrypto}/>       
+        <TableCrypto/>       
        
         </>
-      )}
+      ):
+      <div>Loading..</div>}
     </div>
   </div>
   );
