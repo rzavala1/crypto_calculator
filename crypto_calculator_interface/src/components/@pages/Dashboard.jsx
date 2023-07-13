@@ -10,7 +10,7 @@ function Dashboard() {
             <CalculatorForm />
         </div>
         <div>
-        <h1 className="text-white pt-7 text-center">Escaner Cryto</h1>
+        <h1 className="text-white mt-[90px] text-center">Escaner Cryto</h1>
             <CryptoForm />
         </div>
       </div>

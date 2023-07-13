@@ -65,6 +65,7 @@ const requestData=async(io)=>{
 };
 
 const getDataCrypto = (io) => {
+    requestData(io);
     setInterval(() => {
         requestData(io);
     }, 5000);

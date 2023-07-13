@@ -78,7 +78,7 @@ function TableCrypto() {
 
   const getImage = (name) => {
     const srcStr = name + ".png";
-    return <img src={srcStr} alt={name} className="w-[30px] pr-2" />;
+    return <img src={srcStr} alt={name} className="w-[30px]" />;
   };
 
   return (
@@ -114,9 +114,9 @@ function TableCrypto() {
                       {index === 0 ? (
                         <td
                           {...cell.getCellProps()}
-                          className="text-center p-2 text-primary flex"
+                          className="text-center text-primary flex p-3 text-base ml-2"
                         >
-                          <div>{getImage(cell.value)}</div>
+                          <div className="mr-1">{getImage(cell.value)}</div>
                           {cell.render("Cell")}
                         </td>
                       ) : (

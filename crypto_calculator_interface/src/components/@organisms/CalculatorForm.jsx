@@ -12,7 +12,7 @@ function CalculatorForm() {
     calculatorService
       .calculate(investmentReq)
       .then((response) => {
-        console.info("response",response)
+        console.info("response", response);
         setData(response);
       })
       .catch((error) => {
@@ -24,10 +24,16 @@ function CalculatorForm() {
     <div>
       <div>
         <CalculatorFields onCalculate={calculateCrypto} />
-        {data?.length>0 && (
+        {data?.length > 0 && (
           <>
-            <h1 className="text-white pt-5 pb-[50px]">Proyección de ganancias</h1>
-            <TableInvestment data={data} investment={investment} />
+            <div className="text-center">
+              <h1 className="text-white pt-5 pb-[50px]">
+                Proyección de ganancias
+              </h1>
+            </div>
+            <div className="flex justify-center">
+              <TableInvestment data={data} investment={investment} />
+            </div>
           </>
         )}
       </div>

@@ -7,7 +7,7 @@ function TableInvestment(props) {
 
   return (
     <div className="pt-4">
-      <div className="flex">
+      <div className="flex justify-center">
         <HeadTable values={values} />
         <BodyTable data={data}investment={investment} />
       </div>

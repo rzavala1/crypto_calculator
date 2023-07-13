@@ -49,7 +49,7 @@ function CryptoForm() {
     <div>
       {dataAtom?.length>0 ? (
         <>
-        <div className="flex justify-end mt-10">
+        <div className="flex justify-end">
           <ExportCSVButton data={dataAtom} title="Export CSV" headers={headers}/>
           <ExportJSONButton data={dataAtom} title="Export JSON"/>
         </div>
