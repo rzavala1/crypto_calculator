@@ -20,7 +20,7 @@ function TableCrypto() {
           borderRadius: "4px",
         }}
       >
-        {value >= 0 ? "+"+value+"%" :value+"%"}
+        {value >= 0 ? "+" + value + "%" : value + "%"}
       </div>
     );
   };
@@ -28,8 +28,11 @@ function TableCrypto() {
   const columns = useMemo(
     () => [
       { Header: "ASSET", accessor: "name" },
-      { Header: "Price (USD)", accessor: "price_usd", Cell: ({ value }) => "$"+value },
-      
+      {
+        Header: "Price (USD)",
+        accessor: "price_usd",
+        Cell: ({ value }) => "$" + value,
+      },
       {
         Header: "CHANGE VS USD (1H)",
         accessor: "percent_change_usd_last_1_hour",
@@ -40,9 +43,22 @@ function TableCrypto() {
         accessor: "percent_change_usd_last_24_hours",
         Cell: ({ value }) => getColor(value),
       },
-      { Header: "7 DAY TREND", accessor: "percent_change_last_1_week" },
-      { Header: "REPORTED MARKETCAP", accessor: "current_marketcap_usd",Cell: ({ value }) => "$"+value },
-      { Header: "REAL VOLUME (24H)", accessor: "real_volume_last_24_hours" ,Cell: ({ value }) => "$"+value },
+      { Header: "7 DAY TREND", value: "current_marketcap_usd" },
+      {
+        Header: "REPORTED MARKETCAP",
+        accessor: "current_marketcap_usd",
+        Cell: ({ value }) => "$" + value,
+      },
+      {
+        Header: "REAL VOLUME (24H)",
+        accessor: "real_volume_last_24_hours",
+        Cell: ({ value }) => "$" + value,
+      },
+      {
+        Header: "CHANGE VS USD (7D)",
+        accessor: "percent_change_last_1_week",
+        Cell: ({ value }) => getColor(value),
+      },
       {
         Header: "CHANGE VS USD (30D)",
         accessor: "percent_change_last_1_month",
@@ -66,9 +82,9 @@ function TableCrypto() {
   };
 
   return (
-    <div className="pt-10">
+    <div className="pt-3">
       <div>
-        <table {...getTableProps()} className="table">
+        <table {...getTableProps()} className="table w-[100%]">
           <thead className="bg-black text-white">
             {headerGroups.map((headerGroup) => (
               <tr {...headerGroup.getHeaderGroupProps()}>
