@@ -53,9 +53,7 @@ function CryptoForm() {
           <ExportCSVButton data={dataAtom} title="Export CSV" headers={headers}/>
           <ExportJSONButton data={dataAtom} title="Export JSON"/>
         </div>
-        
         <TableCrypto/>       
-       
         </>
       ):
       <Loading />

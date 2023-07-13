@@ -4,10 +4,11 @@ const TextField = ({ label, value, onChange }) => {
   return (
     <div>
       <div className="pb-1">
-        <label className="text-white text-xl">{label}</label>
+        <label htmlFor="investment" className="text-white text-xl">{label}</label>
       </div>
       <div>
         <input
+          id="investment"
           type="number"
           min={0}
           max={100}

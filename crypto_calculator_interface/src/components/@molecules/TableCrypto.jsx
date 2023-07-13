@@ -86,16 +86,16 @@ function TableCrypto() {
       <div>
         <table {...getTableProps()} className="table w-[100%]">
           <thead className="bg-black text-white">
-            {headerGroups.map((headerGroup) => (
-              <tr {...headerGroup.getHeaderGroupProps()}>
+            {headerGroups.map((headerGroup,index) => (
+              <tr {...headerGroup.getHeaderGroupProps()} key={index}>
                 {headerGroup.headers.map((column, index) => (
                   <>
                     {index === 0 ? (
-                      <th {...column.getHeaderProps()} className="p-2 text-sm">
+                      <th {...column.getHeaderProps()} className="p-2 text-sm" key={index}>
                         {column.render("Header")}
                       </th>
                     ) : (
-                      <th {...column.getHeaderProps()} className="p-2 text-sm">
+                      <th {...column.getHeaderProps()} className="p-2 text-sm" key={index}>
                         {column.render("Header")}
                       </th>
                     )}
@@ -112,7 +112,7 @@ function TableCrypto() {
                   {row.cells.map((cell, index) => (
                     <>
                       {index === 0 ? (
-                        <td
+                        <td key={index}
                           {...cell.getCellProps()}
                           className="text-center text-primary flex p-3 text-base ml-2"
                         >
@@ -120,7 +120,7 @@ function TableCrypto() {
                           {cell.render("Cell")}
                         </td>
                       ) : (
-                        <td
+                        <td key={index}
                           {...cell.getCellProps()}
                           className="text-center p-2 text-base"
                         >

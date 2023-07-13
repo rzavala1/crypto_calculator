@@ -1,11 +1,11 @@
-const socketIO = require('socket.io');
 const crytoService = require('../services/crypto.service');
+const ALLOWED_ORIGIN=process.env.ALLOWED_ORIGIN;
 
 const getDataCrypto = (server) => {
 
     const io = require('socket.io')(server, {
         cors: {
-            origin: 'http://localhost:3000',
+            origin: ALLOWED_ORIGIN,
             methods: ['GET', 'POST']
         }
     });
