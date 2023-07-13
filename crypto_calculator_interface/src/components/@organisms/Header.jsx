@@ -5,7 +5,7 @@ function Header() {
     return (
       <header className='p-[35px] bg-secondary'>
         <div>
-          <img src={ImageLogo} className="w-[200px]"/>
+          <img src={ImageLogo} className="w-[200px]" alt=""/>
         </div>
       </header>
     );

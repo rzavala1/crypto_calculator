@@ -1,21 +1,32 @@
-import { useState } from "react";
-import calculatorService from "../../services/CalculatorService";
-import CalculatorFields from "../@molecules/CalculatorFields";
-import TableInvestment from "../@molecules/TableInvestment";
+import React, { useEffect, useState } from "react";
+import io from "socket.io-client";
 
-function CrytoForm() {
+function CryptoForm() {
 
-    const[data, setData]=useState([]);
-    const [investment, setInvestment]=useState(0);
+  const [dataCrypto, setDataCrypto]=useState([])
   
+  useEffect(() => {
+    const socket = io("http://localhost:4000"); 
+
+    socket.on("connect", () => {
+      console.log("Connect socket server");
+    });
+
+    socket.on("crypto", (data) => {
+      console.info(data);
+      setDataCrypto(data);
+    });
+
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
 
   return (
     <div>
-      <div>
-       
-      </div>
+      <div></div>
     </div>
   );
 }
 
-export default CrytoForm;
+export default CryptoForm;

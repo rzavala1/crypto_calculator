@@ -27,14 +27,12 @@ const runGetDataCrypto = async (investmentAmount,res) => {
     let i=0;
     const newData = selectedCoins.map((item) => {
       const profit=getProfit(investmentAmount,configPercentage[i], item.price);
-      //const profit = (investmentAmount*item.price*(configPercentage[i]/100))*12;
       i++;
       return {
         ...item,
         profit,
       };
     });
-    console.info(newData)
     res.json(newData);
   } catch (error) {
     res.status(500).json({ error: 'Failed to fetch prices' });

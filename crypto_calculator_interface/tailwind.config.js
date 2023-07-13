@@ -7,7 +7,7 @@ module.exports = {
         primary: '#E394A7',
         secondary: '#2F3559',
         text:"#E6D8CB",
-        pantanqu:"#9A5071",
+        pantanqu:"#B620E0",
 
       },
       fontFamily: {
