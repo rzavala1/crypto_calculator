@@ -13,11 +13,8 @@ readConfig()
   });
 
   const getProfit =(investmentAmount,  monthlyGrowthRate, price) =>{
-    console.info(investmentAmount,monthlyGrowthRate,price)
     const porcet=monthlyGrowthRate/100;
-    console.info(porcet)
-    const profitTotal=investmentAmount*porcet*12+Number(investmentAmount);
-    //const profitTotal=((investmentAmount*(monthlyGrowthRate/100))*12)+investmentAmount;
+    const profitTotal=investmentAmount*porcet*12+parseFloat(investmentAmount);
     const buyInit=investmentAmount/price;
     const buyFinal=profitTotal/price;
     return {profitTotal,buyInit,buyFinal};
