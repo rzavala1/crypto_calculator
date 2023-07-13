@@ -2,9 +2,9 @@ import React from 'react';
 
 const HeadTable = ({ values }) => {
   return (
-    <div className='flex text-white'>
+    <div className='text-white'>
       {values.map((obj, index) => {
-          return <div key={index} className="p-2 text-base w-[160px]">{obj}</div>;
+          return <div key={index} className="p-2 text-normal text-primary">{obj}</div>;
         })}
     </div>
     

@@ -23,9 +23,9 @@ readConfig()
 const runGetDataCrypto = async (investmentAmount,res) => {
   try {
     const prices = await getDataCryptoService();
-    const selectedCoins = prices.filter((item) => configAssets.includes(item.name));
+    const selectedCoins = prices.filter((item) => configAssets.includes(item.symbol));
     let i=0;
-    const newData = selectedCoins.map((item) => {
+    const newData = selectedCoins?.map((item) => {
       const profit=getProfit(investmentAmount,configPercentage[i], item.price);
       i++;
       return {

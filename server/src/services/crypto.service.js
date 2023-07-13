@@ -7,22 +7,20 @@ const PORT_MESSARI=process.env.PORT_MESSARI;
 const PATH_ASSETS_MESSARI=process.env.PATH_ASSETS_MESSARI;
 const API_KEY_MESSARI=process.env.API_KEY_MESSARI;
 
-const options = {
-    hostname: HOSTNAME_MESSARI,
-    port: PORT_MESSARI,
-    path: PATH_ASSETS_MESSARI,
-    method: 'GET',
-    headers: { "x-messari-api-key": API_KEY_MESSARI },
-};
-
 const requestData=(io)=>{
 
     let configAssets = [];
+    const options = {
+        hostname: HOSTNAME_MESSARI,
+        port: PORT_MESSARI,
+        path: PATH_ASSETS_MESSARI,
+        method: 'GET',
+        headers: { "x-messari-api-key": API_KEY_MESSARI },
+    };
 
     readConfig()
         .then((data) => {
             configAssets = data.map((item) => item.asset);
-            console.info(configAssets)
         })
         .catch((error) => {
             console.error(error);
@@ -34,25 +32,25 @@ const requestData=(io)=>{
             (str += dataResponse);
         });
         res.on('end', () => {
-            const selectedCoins = JSON.parse(str).data.filter((item) => configAssets.includes(item.symbol));
-            const data = selectedCoins.map((item) => {
+            const selectedCoins = JSON.parse(str).data?.filter((item) => configAssets.includes(item.symbol));
+            const data = selectedCoins?.map((item) => {
                 return {
                     id: item.id,
                     symbol: item.symbol,
                     name: item.name,
-                    price_usd: item.metrics.market_data.price_usd,
-                    percent_change_usd_last_1_hour: item.metrics.market_data.percent_change_usd_last_1_hour,
-                    real_volume_last_24_hours: item.metrics.market_data.real_volume_last_24_hours,
-                    percent_change_usd_last_24_hours: item.metrics.market_data.percent_change_usd_last_24_hours,
+                    price_usd: item.metrics.market_data.price_usd.toFixed(3),
+                    percent_change_usd_last_1_hour: item.metrics.market_data.percent_change_usd_last_1_hour.toFixed(3),
+                    real_volume_last_24_hours: item.metrics.market_data.real_volume_last_24_hours.toFixed(3),
+                    percent_change_usd_last_24_hours: item.metrics.market_data.percent_change_usd_last_24_hours.toFixed(3),
 
-                    current_marketcap_usd: item.metrics.marketcap.current_marketcap_usd,
+                    current_marketcap_usd: item.metrics.marketcap.current_marketcap_usd.toFixed(3),
 
-                    percent_change_last_1_week: item.metrics.roi_data.percent_change_last_1_week,
-                    percent_change_last_1_month: item.metrics.roi_data.percent_change_last_1_month,
-                    percent_change_last_1_year: item.metrics.roi_data.percent_change_last_1_year,
+                    percent_change_last_1_week: item.metrics.roi_data.percent_change_last_1_week.toFixed(3),
+                    percent_change_last_1_month: item.metrics.roi_data.percent_change_last_1_month.toFixed(3),
+                    percent_change_last_1_year: item.metrics.roi_data.percent_change_last_1_year.toFixed(3),
 
-                    last_30_days: item.metrics.risk_metrics.sharpe_ratios.last_30_days,
-                    last_1_year: item.metrics.risk_metrics.sharpe_ratios.last_1_year,
+                    last_30_days: item.metrics.risk_metrics.sharpe_ratios.last_30_days.toFixed(3),
+                    last_1_year: item.metrics.risk_metrics.sharpe_ratios.last_1_year.toFixed(3),
 
                 }
             });

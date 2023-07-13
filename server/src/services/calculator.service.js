@@ -25,7 +25,8 @@ const getDataCryptoService = () => {
         try {
           const prices = JSON.parse(str).data.map((item) => ({
             id: item.id,
-            name: item.symbol,
+            name: item.name,
+            symbol:item.symbol,
             price: item.metrics.market_data.price_usd,
             profit: 0
           }));

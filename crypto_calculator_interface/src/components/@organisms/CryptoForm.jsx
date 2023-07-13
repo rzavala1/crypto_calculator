@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import io from "socket.io-client";
+import TableCrypto from "../@molecules/TableCrypto";
 
 function CryptoForm() {
 
@@ -24,8 +25,15 @@ function CryptoForm() {
 
   return (
     <div>
-      <div></div>
+    <div>
+      {dataCrypto?.length>0 && (
+        <>
+        <TableCrypto data={dataCrypto}/>       
+       
+        </>
+      )}
     </div>
+  </div>
   );
 }
 

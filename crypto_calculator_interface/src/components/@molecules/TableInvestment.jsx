@@ -1,5 +1,5 @@
-import BodyTable from "../@atoms/BodyTable.jsx";
-import HeadTable from "../@atoms/HeadTable";
+import BodyTable from "./BodyTable.jsx";
+import HeadTable from "./HeadTable";
 
 function TableInvestment(props) {
   const { data, investment } = props;
@@ -7,7 +7,7 @@ function TableInvestment(props) {
 
   return (
     <div className="pt-4">
-      <div>
+      <div className="flex">
         <HeadTable values={values} />
         <BodyTable data={data}investment={investment} />
       </div>
