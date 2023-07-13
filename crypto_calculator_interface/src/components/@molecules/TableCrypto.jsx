@@ -85,7 +85,7 @@ function TableCrypto() {
     <div className="pt-3">
       <div>
         <table {...getTableProps()} className="table w-[100%]">
-          <thead className="bg-black text-white">
+          <thead className="bg-bgTable text-white">
             {headerGroups.map((headerGroup,index) => (
               <tr {...headerGroup.getHeaderGroupProps()} key={index}>
                 {headerGroup.headers.map((column, index) => (
@@ -104,7 +104,7 @@ function TableCrypto() {
               </tr>
             ))}
           </thead>
-          <tbody {...getTableBodyProps()} className="bg-black text-white">
+          <tbody {...getTableBodyProps()} className="bg-bgTable text-white">
             {rows.map((row) => {
               prepareRow(row);
               return (

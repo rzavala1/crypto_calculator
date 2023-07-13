@@ -26,7 +26,7 @@ function CalculatorForm() {
         <CalculatorFields onCalculate={calculateCrypto} />
         {data?.length > 0 && (
           <>
-            <div className="text-center">
+            <div className="flex justify-center pl-[130px]">
               <h1 className="text-white pt-5 pb-[50px]">
                 Proyección de ganancias
               </h1>

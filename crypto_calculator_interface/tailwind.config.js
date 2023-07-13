@@ -8,7 +8,8 @@ module.exports = {
         secondary: '#2F3559',
         text:"#E6D8CB",
         pantanqu:"#B620E0",
-        resalt:"##EAC6F4"
+        resalt:"##EAC6F4",
+        bgTable:"#10131a"
 
       },
       fontFamily: {

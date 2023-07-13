@@ -5,7 +5,9 @@ function Layout({ children }) {
   return (
     <>
       <Header />
-        <main className="bg-secondary h-[100%]">{children}</main>
+        <main className="h-[100%] z-10">{children}</main>
+        <div className="stars"></div>
+        <div className="twinkling-blue"></div>
       <Footer />
     </>
   );
