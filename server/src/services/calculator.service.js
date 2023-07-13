@@ -1,45 +1,52 @@
-// services/contactService.js
-//const { Contact } = require('../models');
+const https = require('https');
 
-const getAllContacts = async () => {
-   await require("https")
-        .request(
-            {
-                host: "data.messari.io",
-                path: "/api/v1/assets/btc",
-                // replace YOUR-SECRET-KEY with your actual key
-                // from https://messari.io/account/api (create messari account first)
-                headers: { "x-messari-api-key": "0yI+RkCuk+DVB+soFXIHFPBp94n+goYWIA6MUVNfhXuIkaiC" },
-            },
-            function (response) {
-                console.info(response)
-                let str = "";
-                response.on("data", (chunk) => (str += chunk));
-                response.on("end", () => console.log(JSON.parse(str)));
-            }
-        )
-        .end();
-    return "hola mundo"
-    /*try {
-      const contacts = await Contact.findAll();
-      return contacts;
-    } catch (error) {
-      throw new Error('Failed to fetch contacts');
-    }*/
+const HOSTNAME_MESSARI = process.env.HOSTNAME_MESSARI;
+const PORT_MESSARI = process.env.PORT_MESSARI;
+const PATH_ASSETS_MESSARI_PRICE = process.env.PATH_ASSETS_MESSARI_PRICE;
+const API_KEY_MESSARI=process.env.API_KEY_MESSARI;
+
+const options = {
+  hostname: HOSTNAME_MESSARI,
+  port: PORT_MESSARI,
+  path: PATH_ASSETS_MESSARI_PRICE,
+  method: 'GET',
+  headers: { "x-messari-api-key": API_KEY_MESSARI },
 };
 
-const getContactById = async (id) => {
-    /* try {
-       const contact = await Contact.findByPk(id);
-       return contact;
-     } catch (error) {
-       throw new Error('Failed to fetch contact');
-     }*/
+
+const getDataCryptoService = () => {
+  return new Promise((resolve, reject) => {
+    const req = https.request(options, (res) => {
+      let str = '';
+      res.on('data', (dataResponse) => {
+        str += dataResponse;
+      });
+      res.on('end', () => {
+        try {
+          const prices = JSON.parse(str).data.map((item) => ({
+            id: item.id,
+            name: item.symbol,
+            price: item.metrics.market_data.price_usd,
+            profit: 0
+          }));
+          resolve(prices);
+        } catch (error) {
+          reject(new Error('Failed to parse response data'));
+        }
+      });
+    });
+
+    req.on('error', (error) => {
+      reject(new Error('Request failed'));
+    });
+
+    req.end();
+  });
 };
+
 
 
 
 module.exports = {
-    getAllContacts,
-    getContactById,
+  getDataCryptoService,
 };

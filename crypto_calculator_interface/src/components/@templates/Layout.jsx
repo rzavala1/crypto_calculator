@@ -5,7 +5,7 @@ function Layout({ children }) {
   return (
     <>
       <Header />
-      {children}
+        <main className="bg-secondary h-[100%]">{children}</main>
       <Footer />
     </>
   );

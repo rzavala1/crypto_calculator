@@ -4,13 +4,15 @@ const https = require('https');
 const HOSTNAME_MESSARI=process.env.HOSTNAME_MESSARI;
 const PORT_MESSARI=process.env.PORT_MESSARI;
 const PATH_ASSETS_MESSARI=process.env.PATH_ASSETS_MESSARI;
+const API_KEY_MESSARI=process.env.API_KEY_MESSARI;
 
 const requestData=(io)=>{
     const options = {
         hostname: HOSTNAME_MESSARI,
         port: PORT_MESSARI,
         path: PATH_ASSETS_MESSARI,
-        method: 'GET'
+        method: 'GET',
+        headers: { "x-messari-api-key": API_KEY_MESSARI },
     };
     https.request(options, (res) => {
         let str = '';
@@ -28,8 +30,8 @@ const requestData=(io)=>{
             io.emit('crypto', str)
         })
     }).end();
-
 }
+
 const getDataCrypto = async (io) => {
     setInterval(() => {
         requestData(io);

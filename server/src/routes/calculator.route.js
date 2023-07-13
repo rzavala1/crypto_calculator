@@ -3,8 +3,6 @@ const calculatorController  = require('../controllers/calculator.controller');
 
 const router = express.Router();
 
-//hacer cambios aqui de ruta
-router.get('/', calculatorController.getAllContacts);
-router.get('/:id', calculatorController.getContactById);
+router.get('/', calculatorController.getDataCrypto);
 
 module.exports = router;
