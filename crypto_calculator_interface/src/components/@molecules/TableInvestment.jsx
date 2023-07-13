@@ -1,17 +1,15 @@
-function TableInvestment(props) {
-  const { data } = props;
+import BodyTable from "../@atoms/BodyTable.jsx";
+import HeadTable from "../@atoms/HeadTable";
 
-  const getImage = (name) => {
-    const srcStr = name + ".png";
-    return <img src={srcStr} alt={name} className="w-[40px]"/>;
-  };
+function TableInvestment(props) {
+  const { data, investment } = props;
+  const values=["Cryptomoneda", "Inversión USD", "Precio compra USD", "Cryptos compradas", "Proyección anual", "Proyección Cryptos"]
 
   return (
-    <div>
+    <div className="pt-4">
       <div>
-        {data.map((obj, index) => {
-          return <div key={index}>{getImage(obj.name)}</div>;
-        })}
+        <HeadTable values={values} />
+        <BodyTable data={data}investment={investment} />
       </div>
     </div>
   );

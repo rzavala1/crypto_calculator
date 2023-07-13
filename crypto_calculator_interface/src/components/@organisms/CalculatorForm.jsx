@@ -5,13 +5,15 @@ import TableInvestment from "../@molecules/TableInvestment";
 
 function CalculatorForm() {
 
-    const[data, setData]=useState([])
+    const[data, setData]=useState([]);
+    const [investment, setInvestment]=useState(0);
   
-    const calculateCrypto = (investment) => {
+    const calculateCrypto = (investmentReq) => {
+        setInvestment(investmentReq)
     calculatorService
-      .calculate(investment)
+      .calculate(investmentReq)
       .then((response) => {
-        setData(response)
+        setData(response);
       })
       .catch((error) => {
         console.error(error);
@@ -22,7 +24,8 @@ function CalculatorForm() {
     <div>
       <div>
         <CalculatorFields onCalculate={calculateCrypto}/>
-        <TableInvestment data={data} />
+        <h1 className="text-white pt-5">Proyección de ganancias</h1>
+        <TableInvestment data={data} investment={investment}/>
       </div>
     </div>
   );
